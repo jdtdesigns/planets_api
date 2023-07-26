@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "seed": "node ./db/seed.js"
+    "seed": "node ./db/seed.js",
+    "start": "node server.js",
+    "dev": "npx nodemon server.js"
   },
   "keywords": [],
   "author": "",
