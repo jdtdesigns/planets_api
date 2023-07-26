@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "seed": "node ./db/seed.js",
+    "seed:users": "node ./db/user_seed.js",
     "start": "node server.js",
     "dev": "npx nodemon server.js"
   },
