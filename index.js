@@ -1,26 +1,72 @@
 const { MongoClient, ObjectId } = require('mongodb');
-const client = new MongoClient('mongodb://localhost:27017/');
 
-client.connect()
-  .then(async () => {
-    const db = client.db('test_db');
+const url = 'mongodb://localhost:27017';
+const client = new MongoClient(url);
 
-    const animalCollection = db.collection('animals');
+client.connect().then(async () => {
+  console.log('Client connected');
 
-    await animalCollection.insertOne({
-      type: 'bear',
-      sound: 'grrrr'
+  const db = client.db('rutgers_db');
+
+  const studentsCollection = db.collection('students');
+
+  // await studentsCollection.insertOne({
+  //   name: 'JD',
+  //   course_type: 'FSF-full-time',
+  //   projects: [{ name: 'Cool app', type: 'database-tester' }]
+  // });
+
+
+  // const students = await studentsCollection
+  //   .find()
+  //   // .limit(3)
+  //   .sort({ name: -1 })
+  //   .toArray();
+
+
+  // const brandon = await studentsCollection.findOne({
+  //   _id: new ObjectId('64bfeb877f486105d8efaa71')
+  // });
+
+  // await studentsCollection
+  //   .updateOne({
+  //     _id: new ObjectId('64c0015d711e0c95f391fc61')
+  //   }, {
+  //     $push: {
+  //       projects: {
+  //         name: 'And another project',
+  //         type: 'full stack'
+  //       }
+  //     }
+  //   });
+
+  // await studentsCollection
+  //   .updateOne({
+  //     _id: new ObjectId('64c0015d711e0c95f391fc61')
+  //   }, {
+  //     $pop: {
+  //       projects: -1
+  //     }
+  //   });
+
+  await studentsCollection
+    .updateOne({
+      _id: new ObjectId('64c0015d711e0c95f391fc61')
+    }, {
+      $pull: {
+        projects: {
+          name: 'One more project'
+        }
+      }
     });
 
-    const animals = await animalCollection.find().toArray();
-
-    const bear = await animalCollection.findOne({ _id: new ObjectId('64bfd1ced06050aa92f97fda') })
-
-    console.log(bear);
-    // animals.find({})
-    //   .toArray()
-    //   .then(data => console.log(data));
+  const student = await studentsCollection.findOne({
+    _id: new ObjectId('64c0015d711e0c95f391fc61')
   });
 
+  console.log(student);
+
+
+})
 
 
