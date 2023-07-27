@@ -39,5 +39,24 @@ router.get('/planet/:name', async (req, res) => {
   });
 });
 
+// Planet stats route
+router.get('/stats', async (req, res) => {
+  const stats = await Planet.aggregate([
+    {
+      $group: {
+        _id: null,
+        count: { $sum: 1 },
+        totalLikes: {
+          $sum: {
+            $size: '$likes'
+          }
+        }
+      }
+    }
+  ]);
+
+  res.json(stats);
+});
+
 // Export our router object
 module.exports = router;
