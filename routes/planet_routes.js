@@ -6,7 +6,7 @@ router.get('/planets', async (req, res) => {
   try {
     const planets = await Planet.find({});
 
-    res.json(planets);
+    res.send(planets);
   } catch (error) {
     res.status(500).json({ error: 'Unable to fetch planets' });
   }
